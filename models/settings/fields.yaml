@@ -1,0 +1,25 @@
+tabs:
+    fields:
+        host:
+            span: left
+            label: "Host"
+            type: text
+        port:
+            span: left
+            label: "Port"
+            type: text
+        user:
+            span: left
+            label: "User"
+            comment: ""
+            type: text
+        password:
+            span: left
+            label: "Password"
+            comment: ""
+            type: password
+        base_dn:
+            span: left
+            label: "Base DN"
+            comment: ""
+            type: text

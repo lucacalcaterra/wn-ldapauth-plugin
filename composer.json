@@ -1,0 +1,23 @@
+{
+    "name": "lucacalcaterra/ldap-plugin",
+    "type": "winter-plugin",
+    "description": "Ldap Plugin Winter CMS",
+    "keywords": ["winter", "cms", "demo", "plugin"],
+    "license": "MIT",
+    "authors": [{
+        "name": "Luca Calcaterra",
+        "email": "calcaterra.luca@gmail.com",
+        "role": "Co-founder"
+    }],
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0"
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "installer-name": "ldapauth"
+    }
+}

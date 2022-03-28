@@ -3,14 +3,19 @@
 namespace LucaCalcaterra\LdapAuth;
 
 use Backend;
+use Event, View;
 use Backend\Models\UserRole;
 use System\Classes\PluginBase;
+use System\Classes\CombineAssets;
+
 
 /**
  * LdapAuth Plugin Information File
  */
 class Plugin extends PluginBase
 {
+    public $elevated = true;
+
     /**
      * Returns information about this plugin.
      *
@@ -58,6 +63,18 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        \Backend\Controllers\Auth::extend(function ($controller) {
+            if (\Backend\Classes\BackendController::$action == 'signin') {
+
+
+
+                $controller->addCss(CombineAssets::combine(['ldapauth.css'], plugins_path() . '/lucacalcaterra/ldapauth/assets/css/'));
+            }
+        });
+
+        Event::listen('backend.auth.extendSigninView', function ($controller) {
+            return View::make("lucacalcaterra.ldapauth::login");
+        });
     }
 
     /**

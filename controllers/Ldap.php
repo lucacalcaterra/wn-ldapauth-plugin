@@ -2,20 +2,25 @@
 
 namespace LucaCalcaterra\LdapAuth\Controllers;
 
+use DebugBar\DebugBar;
 use Backend\Models\User;
-use Backend\Models\AccessLog;
 
+use Backend\Models\AccessLog;
 use Backend\Classes\Controller;
+
 use System\Classes\UpdateManager;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
 use Backend, BackendAuth, Config, Flash, Input, Lang, Request, Session, ValidationException;
 
-use Illuminate\Support\Facades\Auth;
-
 
 class Ldap extends Controller
 {
+
+    use AuthenticatesUsers;
 
     protected $publicActions = ['index'];
 
@@ -23,18 +28,27 @@ class Ldap extends Controller
     {
         parent::__construct();
     }
+    public function username()
+    {
+        return 'username';
+    }
 
     public function index()
     {
 
         /** test */
         $credentials = [
-            'mail' => 'jdoe@local.com',
-            'password' => 'password',
+            'samaccountname' => 'dpp1060688',
+            'password' => 'Tolentino.43',
         ];
 
+        //dd(app()->getBindings());
+        //dd(Auth::attempt($credentials));
+
         if (Auth::attempt($credentials)) {
+            // dd($credentials);
             $user = Auth::user();
+            dd($user);
 
             return redirect('/dashboard')->with([
                 'message' => "Welcome back, {$user->getName()}"

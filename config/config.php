@@ -87,7 +87,7 @@
                         'model' => LdapRecord\Models\ActiveDirectory\User::class,
                         'rules' => [],
                         'database' => [
-                            'model' => App\Models\User::class,
+                            'model' => \LucaCalcaterra\LdapAuth\Models\BackendUser::class,
                             'sync_passwords' => true,
                             'sync_attributes' => [
                                 'name' => 'cn',

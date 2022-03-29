@@ -11,6 +11,9 @@ use System\Classes\UpdateManager;
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
 use Backend, BackendAuth, Config, Flash, Input, Lang, Request, Session, ValidationException;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class Ldap extends Controller
 {
 
@@ -23,6 +26,21 @@ class Ldap extends Controller
 
     public function index()
     {
+
+        /** test */
+        $credentials = [
+            'mail' => 'jdoe@local.com',
+            'password' => 'password',
+        ];
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            return redirect('/dashboard')->with([
+                'message' => "Welcome back, {$user->getName()}"
+            ]);
+        }
+
 
         # CHECK SETTINGS ARE DEFINED
         $this->checkSettings(['host', 'port', 'user', 'password']);

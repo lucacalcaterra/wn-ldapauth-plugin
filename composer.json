@@ -7,11 +7,12 @@
     "authors": [{
         "name": "Luca Calcaterra",
         "email": "calcaterra.luca@gmail.com",
-        "role": "Co-founder"
+        "role": "Maintainer"
     }],
     "require": {
         "php": ">=5.4",
-        "composer/installers": "~1.0"
+        "composer/installers": "~1.0",
+        "directorytree/ldaprecord-laravel": "~2.5.4"
     },
 
     "extra": {

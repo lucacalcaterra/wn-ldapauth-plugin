@@ -6,6 +6,7 @@ namespace LucaCalcaterra\LdapAuth\Models;
 // Initial compatibility with Illumninate.Auth
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Backend\Models\User as BackendUserModel;
 
 
 class BackendUser extends BackendUserModel implements AuthenticatableContract

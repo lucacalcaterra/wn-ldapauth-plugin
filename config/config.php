@@ -90,12 +90,13 @@
                             'model' => \LucaCalcaterra\LdapAuth\Models\BackendUser::class,
                             'sync_passwords' => true,
                             'sync_attributes' => [
-                                'name' => 'cn',
-                                'username' => 'samaccountname',
+                                'first_name' => 'givenName',
+                                'last_name' => 'sn',
+                                'login' => 'samaccountname',
                                 'email' => 'mail',
                             ],
                             'sync_existing' => [
-                                'username' => 'samaccountname',
+                                'login' => 'samaccountname',
                                 //'email' => 'mail', //no altrimenti eccezione duplicato su id username
                             ],
                         ],

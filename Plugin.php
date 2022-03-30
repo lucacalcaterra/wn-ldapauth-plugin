@@ -70,6 +70,19 @@ class Plugin extends PluginBase
         // Setup required packages
         $this->bootPackages();
 
+        // disable password confirmation validation
+        \Backend\Models\User::extend(function ($model) {
+            if (!$model instanceof  \Backend\Models\User) {
+                return;
+            }
+
+            $model->bindEvent('model.beforeValidate', function () use ($model) {
+                $model->rules = [
+                    'password_confirmation' => null
+                ];
+            });
+        });
+
         \Backend\Controllers\Auth::extend(function ($controller) {
             if (\Backend\Classes\BackendController::$action == 'signin') {
 

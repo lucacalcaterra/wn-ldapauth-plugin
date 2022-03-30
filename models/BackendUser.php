@@ -7,13 +7,13 @@ namespace LucaCalcaterra\LdapAuth\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Backend\Models\User as BackendUserModel;
+use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
+use LdapRecord\Laravel\Auth\HasLdapUser;
+use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 
-
-class BackendUser extends BackendUserModel implements AuthenticatableContract
+class BackendUser extends BackendUserModel implements LdapAuthenticatable
 {
-    use Authenticatable,
-        HasApiTokens,
-        Notifiable;
+    use AuthenticatesWithLdap, HasLdapUser;
 
     /**
      * The column name of the "remember me" token.

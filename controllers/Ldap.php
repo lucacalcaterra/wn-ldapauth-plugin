@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
-use Backend, BackendAuth, Config, Flash, Input, Lang, Request, Session, ValidationException;
+use Backend,  Config, Flash, Input, Lang, Request, Session;
 
 
 class Ldap extends Controller
@@ -22,18 +22,29 @@ class Ldap extends Controller
 
     use AuthenticatesUsers;
 
-    protected $publicActions = ['index'];
+    /**
+     * @var array Public controller actions
+     */
+    protected $publicActions = ['signin'];
 
     public function __construct()
     {
         parent::__construct();
     }
-    public function username()
+    public function login()
     {
-        return 'username';
+        return 'login';
     }
 
-    public function index()
+    protected function credentials(Request $request)
+    {
+        return [
+            'mail' => $request->email,
+            'password' => $request->password,
+        ];
+    }
+
+    public function signin()
     {
 
         /** test */
@@ -48,11 +59,9 @@ class Ldap extends Controller
         if (Auth::attempt($credentials)) {
             // dd($credentials);
             $user = Auth::user();
-            dd($user);
+            // dd($user);
 
-            return redirect('/dashboard')->with([
-                'message' => "Welcome back, {$user->getName()}"
-            ]);
+            return Backend::redirectIntended('backend');
         }
 
 

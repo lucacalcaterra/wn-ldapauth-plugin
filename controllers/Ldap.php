@@ -2,20 +2,20 @@
 
 namespace LucaCalcaterra\LdapAuth\Controllers;
 
+use BackendAuth;
 use DebugBar\DebugBar;
+
 use Backend\Models\User;
-
 use Backend\Models\AccessLog;
-use Backend\Classes\Controller;
 
+use Backend\Classes\Controller;
 use System\Classes\UpdateManager;
 use Illuminate\Support\Facades\Auth;
+
+use Winter\Storm\Exception\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
-
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
 use Backend,  Config, Flash, Input, Lang, Request, Session;
-
 
 class Ldap extends Controller
 {
@@ -36,31 +36,27 @@ class Ldap extends Controller
         return 'login';
     }
 
-    protected function credentials(Request $request)
-    {
-        return [
-            'mail' => $request->email,
-            'password' => $request->password,
-        ];
-    }
+    // protected function credentials(Request $request)
+    // {
+    //     return [
+    //         'mail' => $request->email,
+    //         'password' => $request->password,
+    //     ];
+    // }
 
     public function signin()
     {
 
         /** test */
         $credentials = [
-            'samaccountname' => 'dpp1060688',
-            'password' => 'Tolentino.43',
+            'samaccountname' => Input::get('login'),
+            'password' => Input::get('password'),
         ];
 
-        //dd(app()->getBindings());
-        //dd(Auth::attempt($credentials));
-
+        dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
-            // dd($credentials);
             $user = Auth::user();
-            // dd($user);
-
+            BackendAuth::login($user);
             return Backend::redirectIntended('backend');
         }
 
@@ -158,13 +154,13 @@ class Ldap extends Controller
         // // Log the sign in event
         // AccessLog::add($user);
 
-        if (Input::has('login')) {
-            Session::forget('access_token');
-            return;
-        }
+        // if (Input::has('login')) {
+        //     Session::forget('access_token');
+        //     return;
+        // }
 
-        // Redirect to the intended page after successful sign in
-        return Backend::redirectIntended('backend');
+        // // Redirect to the intended page after successful sign in
+        // return Backend::redirectIntended('backend');
     }
 
 

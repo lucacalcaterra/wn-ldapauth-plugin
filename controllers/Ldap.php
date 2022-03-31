@@ -53,7 +53,7 @@ class Ldap extends Controller
             'password' => Input::get('password'),
         ];
 
-        dd(Auth::attempt($credentials));
+        //dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             BackendAuth::login($user);

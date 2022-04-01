@@ -7,6 +7,7 @@ use DebugBar\DebugBar;
 
 use Backend\Models\User;
 use Backend\Models\AccessLog;
+use Backend\Models\UserGroup;
 
 use Backend\Classes\Controller;
 use System\Classes\UpdateManager;
@@ -58,6 +59,8 @@ class Ldap extends Backend\Classes\Controller
             $user = Auth::user();
 
             BackendAuth::login($user, true);
+
+            $user->addGroup(Backend\Models\UserGroup::where('code', 'owners'));
 
             UpdateManager::instance()->update();
             AccessLog::add($user);

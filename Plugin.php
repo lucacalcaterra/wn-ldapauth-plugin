@@ -111,22 +111,22 @@ class Plugin extends PluginBase
         ];
     }
 
-    /**
-     * Registers any back-end permissions used by this plugin.
-     *
-     * @return array
-     */
-    public function registerPermissions()
-    {
-        return []; // Remove this line to activate
+    // /**
+    //  * Registers any back-end permissions used by this plugin.
+    //  *
+    //  * @return array
+    //  */
+    // public function registerPermissions()
+    // {
+    //     // return []; // Remove this line to activate
 
-        return [
-            'lucacalcaterra.ldapauth.some_permission' => [
-                'tab' => 'LdapAuth',
-                'label' => 'Some permission',
-                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
-            ],
-        ];
+    //     return [
+    //         'lucacalcaterra.ldapauth.some_permission' => [
+    //             'tab' => 'LdapAuth',
+    //             'label' => 'Some permission',
+    //             'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
+    //         ],
+    //     ];
     }
 
     /**

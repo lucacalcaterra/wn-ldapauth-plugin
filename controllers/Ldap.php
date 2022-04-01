@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
 use Backend,  Config, Flash, Input, Lang, Request, Session;
 
-class Ldap extends Controller
+class Ldap extends Backend\Classes\Controller
 {
 
     use AuthenticatesUsers;
@@ -56,7 +56,11 @@ class Ldap extends Controller
         //dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            BackendAuth::login($user);
+
+            BackendAuth::login($user, true);
+
+            UpdateManager::instance()->update();
+            AccessLog::add($user);
             return Backend::redirectIntended('backend');
         }
 

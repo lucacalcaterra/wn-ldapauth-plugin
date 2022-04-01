@@ -66,7 +66,7 @@ class Ldap extends Backend\Classes\Controller
 
 
         # CHECK SETTINGS ARE DEFINED
-        $this->checkSettings(['host', 'port', 'user', 'password']);
+        // $this->checkSettings(['host', 'port', 'user', 'password']);
 
         // # CREATE GOOGLE CLIENT
         // $client = new Google_Client();

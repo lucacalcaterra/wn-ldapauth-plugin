@@ -2,23 +2,29 @@
 
 namespace LucaCalcaterra\LdapAuth\Controllers;
 
+use Exception;
 use BackendAuth;
+
 use DebugBar\DebugBar;
-
 use Backend\Models\User;
+use Backend\Models\UserRole;
 use Backend\Models\AccessLog;
-use Backend\Models\UserGroup;
 
+
+use Backend\Models\UserGroup;
 use Backend\Classes\Controller;
 use System\Classes\UpdateManager;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
+use Backend\Classes\BackendController;
+use Winter\Storm\Auth\AuthenticationException;
 use Winter\Storm\Exception\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
 use Backend,  Config, Flash, Input, Lang, Request, Session;
+use Illuminate\Auth\AuthenticationException as AuthAuthenticationException;
 
-class Ldap extends Backend\Classes\Controller
+class Ldap extends Controller
 {
 
     use AuthenticatesUsers;
@@ -54,18 +60,27 @@ class Ldap extends Backend\Classes\Controller
             'password' => Input::get('password'),
         ];
 
-        //dd(Auth::attempt($credentials));
-        if (Auth::attempt($credentials)) {
+        try {
+            $auth = Auth::attempt($credentials);
+            if (!$auth) {
+                throw new AuthenticationException("LDAP Auth Failed");
+            };
             $user = Auth::user();
 
-            BackendAuth::login($user, true);
+            if ($user) {
+                BackendAuth::login($user, true);
 
-            $user->addGroup(Backend\Models\UserGroup::where('code', 'owners'));
-
-            UpdateManager::instance()->update();
-            AccessLog::add($user);
+                UpdateManager::instance()->update();
+                AccessLog::add($user);
+            } else {
+                throw new AuthenticationException("LDAP User not found");
+            }
             return Backend::redirectIntended('backend');
+        } catch (Exception $ex) {
+            Flash::error($ex->getMessage());
+            return Backend::redirect('backend');
         }
+
 
 
         # CHECK SETTINGS ARE DEFINED

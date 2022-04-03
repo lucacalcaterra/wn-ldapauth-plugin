@@ -124,7 +124,7 @@ class Plugin extends PluginBase
             'lucacalcaterra.ldapauth.some_permission' => [
                 'tab' => 'LdapAuth',
                 'label' => 'Some permission',
-                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
+                //'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ],
         ];
     }

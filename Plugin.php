@@ -96,7 +96,7 @@ class Plugin extends PluginBase
             // return View::make("lucacalcaterra.ldapauth::login");
 
             // if must be override default auth page
-            if (Settings::get('')) {
+            if (Settings::get('override_default_login')) {
                 $this->hookSigninForm($controller);
             }
         });

@@ -36,8 +36,8 @@ tabs:
             comment: ""
             type: text
 
-        hide_default_login:
+        override_default_login:
             span: left
-            label: "Hide default login to Backend"
+            label: "Override default login to Backend (login only with LDAP)"
             type: checkbox
             default: false

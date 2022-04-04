@@ -15,6 +15,9 @@ class Settings extends Model
     public $settingsFields = 'fields.yaml';
 
     public $rules = [
-        'show_all_posts' => ['boolean'],
+        'host' => 'required',
+        'port' => 'required',
+        'user' => 'required',
+        'password' => 'required'
     ];
 }

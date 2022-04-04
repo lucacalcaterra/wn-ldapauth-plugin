@@ -14,7 +14,7 @@ use Winter\Storm\Auth\AuthenticationException;
 use Winter\Storm\Exception\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
-use Backend,  Config, Flash, Input, Lang;
+use Backend, Flash, Input, Lang;
 
 class Ldap extends Controller
 {

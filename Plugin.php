@@ -3,15 +3,15 @@
 namespace LucaCalcaterra\LdapAuth;
 
 use App;
-use Backend;
 use Config;
-use Event, View;
+use Backend;
+use Session;
+use Event, View, Flash;
 use Backend\Models\UserRole;
 use System\Classes\PluginBase;
 use System\Classes\CombineAssets;
 use Illuminate\Foundation\AliasLoader;
-
-
+use LucaCalcaterra\LdapAuth\Models\Settings;
 
 /**
  * LdapAuth Plugin Information File
@@ -31,7 +31,8 @@ class Plugin extends PluginBase
             'name'        => 'Ldap Authentication',
             'description' => 'Provide LDAP Authentication for Backend',
             'author'      => 'LucaCalcaterra',
-            'icon'        => 'icon-leaf'
+            'icon'        => 'icon-plug',
+            'homepage'    => 'https://github.com/lucacalcaterra/wn-ldapauth-plugin'
         ];
     }
 
@@ -42,7 +43,7 @@ class Plugin extends PluginBase
                 'label' => 'Ldap',
                 'description' => 'Ldap Settings',
                 'category' => 'system::lang.system.categories.system',
-                'icon' => 'icon-pencil',
+                'icon' => 'icon-plug',
                 'class' => 'Lucacalcaterra\LdapAuth\Models\Settings',
                 'order' => 500,
                 'keywords' => 'ldap settings',
@@ -83,18 +84,31 @@ class Plugin extends PluginBase
             });
         });
 
-        \Backend\Controllers\Auth::extend(function ($controller) {
-            if (\Backend\Classes\BackendController::$action == 'signin') {
+        // override view in case of custom login
 
-
-
-                $controller->addCss(CombineAssets::combine(['ldapauth.css'], plugins_path() . '/lucacalcaterra/ldapauth/assets/css/'));
-            }
-        });
+        // \Backend\Controllers\Auth::extend(function ($controller) {
+        //     if (\Backend\Classes\BackendController::$action == 'signin') {
+        //         $controller->addCss(CombineAssets::combine(['ldapauth.css'], plugins_path() . '/lucacalcaterra/ldapauth/assets/css/'));
+        //     }
+        // });
 
         Event::listen('backend.auth.extendSigninView', function ($controller) {
-            return View::make("lucacalcaterra.ldapauth::login");
+            // return View::make("lucacalcaterra.ldapauth::login");
+
+            // if must be override default auth page
+            if (Settings::get('')) {
+                $this->hookSigninForm($controller);
+            }
         });
+    }
+
+    protected function hookSigninForm($controller)
+    {
+        $controller->addJs('/plugins/lucacalcaterra/ldapauth/assets/js/override-auth.js');
+        $message = Session::get('message');
+        if (!empty($message)) {
+            Flash::error($message);
+        }
     }
 
     /**
@@ -105,10 +119,6 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return []; // Remove this line to activate
-
-        return [
-            'LucaCalcaterra\LdapAuth\Components\MyComponent' => 'myComponent',
-        ];
     }
 
     /**
@@ -125,26 +135,6 @@ class Plugin extends PluginBase
                 'tab' => 'LdapAuth',
                 'label' => 'Some permission',
                 //'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
-            ],
-        ];
-    }
-
-    /**
-     * Registers back-end navigation items for this plugin.
-     *
-     * @return array
-     */
-    public function registerNavigation()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'ldapauth' => [
-                'label'       => 'LdapAuth',
-                'url'         => Backend::url('lucacalcaterra/ldapauth/mycontroller'),
-                'icon'        => 'icon-leaf',
-                'permissions' => ['lucacalcaterra.ldapauth.*'],
-                'order'       => 500,
             ],
         ];
     }

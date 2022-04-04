@@ -1,25 +1,43 @@
 tabs:
+    stretch: true
+    defaultTab: Ldap Options
+    cssClass: text-blue
+    lazy:
+        - Misc
+    icons:
+        Connection: icon-plug
     fields:
         host:
             span: left
             label: "Host"
             type: text
+            required: true
         port:
             span: left
             label: "Port"
-            type: text
+            type: number
+            default: 389
+            required: true
         user:
             span: left
             label: "User"
             comment: ""
             type: text
+            required: true
         password:
             span: left
             label: "Password"
             comment: ""
             type: password
+            required: true
         base_dn:
             span: left
             label: "Base DN"
             comment: ""
             type: text
+
+        hide_default_login:
+            span: left
+            label: "Hide default login to Backend"
+            type: checkbox
+            default: false

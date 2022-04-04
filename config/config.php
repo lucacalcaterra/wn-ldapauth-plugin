@@ -1,16 +1,14 @@
-<?php return [
-    // If null, value will be pulled from app.debug
+<?php
+
+use LucaCalcaterra\LdapAuth\Models\Settings;
+
+return [
 
     'packages' => [
         'illuminate-auth' => [
             'providers' => [
                 '\Illuminate\Auth\AuthServiceProvider',
             ],
-
-            // 'aliases' => [
-            //     'Sentry'   => '\Sentry\Laravel\Facade',
-            // ],
-
             'config_namespace' => 'auth',
 
             'config' => [
@@ -52,11 +50,6 @@
                         'driver' => 'session',
                         'provider' => 'ldap',
                     ],
-
-                    // 'api' => [
-                    //     'driver' => 'passport',
-                    //     'provider' => 'users',
-                    // ],
                 ],
 
                 /*
@@ -97,40 +90,10 @@
                             ],
                             'sync_existing' => [
                                 'login' => 'samaccountname',
-                                //'email' => 'mail', //no altrimenti eccezione duplicato su id username
                             ],
                         ],
                     ],
-                    // 'users' => [
-                    //     'driver' => 'database',
-                    //     'table' => 'users',
-                    // ],
                 ],
-
-                /*
-                |--------------------------------------------------------------------------
-                | Resetting Passwords
-                |--------------------------------------------------------------------------
-                |
-                | You may specify multiple password reset configurations if you have more
-                | than one user table or model in the application and you want to have
-                | separate password reset settings based on the specific user types.
-                |
-                | The expire time is the number of minutes that the reset token should be
-                | considered valid. This security feature keeps tokens short-lived so
-                | they have less time to be guessed. You may change this as needed.
-                |
-                */
-
-                // **NOTE**: May not be currently necessary as October implements this separately
-                //
-                // 'passwords' => [
-                //     'users' => [
-                //         'provider' => 'users',
-                //         'table' => 'backend_users_password_resets',
-                //         'expire' => 60,
-                //     ],
-                // ],
             ],
         ],
 
@@ -146,20 +109,17 @@
 
                 'connections' => [
                     'default' => [
-                        'hosts' => [env('LDAP_HOST', '127.0.0.1')],
-                        'username' => env('LDAP_USERNAME', 'cn=user,dc=local,dc=com'),
-                        'password' => env('LDAP_PASSWORD', 'secret'),
+                        'hosts' => [env('LDAP_HOST', Settings::get('host'))],
+                        'username' => env('LDAP_USERNAME', Settings::get('user')),
+                        'password' => env('LDAP_PASSWORD', Settings::get('password')),
                         'port' => env('LDAP_PORT', 389),
-                        'base_dn' => env('LDAP_BASE_DN', 'dc=local,dc=com'),
+                        'base_dn' => env('LDAP_BASE_DN', Settings::get('base_dn')),
                         'timeout' => env('LDAP_TIMEOUT', 5),
                         'use_ssl' => env('LDAP_SSL', false),
                         'use_tls' => env('LDAP_TLS', false),
                     ]
                 ]
             ]
-            // 'aliases' => [
-            //     'Passport' => '\Laravel\Passport\Passport',
-            // ],
         ],
     ],
 ];

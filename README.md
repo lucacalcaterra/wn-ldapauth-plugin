@@ -17,3 +17,6 @@ Feel to submit PR or open new Issues.
 ## Author
 
 Luca Calcaterra - 2022
+
+### Third party library used for LDAP Authentication
+LdapRecord: https://github.com/DirectoryTree/LdapRecord-Laravel

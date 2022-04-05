@@ -3,6 +3,7 @@ Winter CMS Ldap Auth Plugin
 
 This plugin provide LDAP Authentication for Winter CMS.
 
+## Usage
 To install this plugin:
 
 1. download and extract this archive in /plugins/lucacalcaterra/ldapauth
@@ -13,6 +14,6 @@ To install this plugin:
 
 Feel to submit PR or open new Issues.
 
-# Author
+## Author
 
 Luca Calcaterra - 2022

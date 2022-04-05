@@ -29,9 +29,6 @@ class Ldap extends Controller
 
     public function signin()
     {
-
-
-
         try {
             // get credentials from login form
             $username = Input::get('login');

@@ -8,6 +8,7 @@ use Backend;
 use Session;
 use Event, View, Flash;
 use Backend\Models\UserRole;
+use Backend\Controllers\Users;
 use System\Classes\PluginBase;
 use System\Classes\CombineAssets;
 use Illuminate\Foundation\AliasLoader;
@@ -100,6 +101,26 @@ class Plugin extends PluginBase
                 $this->hookSigninForm($controller);
             }
         });
+        // add ldap fields on form
+        Event::listen('backend.form.extendFields', function ($widget) {
+            $this->addFieldsToUserForm($widget);
+        });
+        // add ldap columns on list
+        Event::listen('backend.list.extendColumns', function ($widget) {
+            $this->addFieldsToUserList($widget);
+        });
+
+        Event::listen('backend.filter.extendScopes', function (\Backend\Widgets\Filter $filterWidget) {
+            $filterWidget->addScopes([
+                'ldap_user' => [
+                    'label' => 'LDAP User',
+                    'type' => 'checkbox',
+                    'default' => false,
+                    'conditions' => "domain IS NOT NULL"
+
+                ]
+            ]);
+        });
     }
 
     protected function hookSigninForm($controller)
@@ -111,33 +132,44 @@ class Plugin extends PluginBase
         }
     }
 
-    /**
-     * Registers any front-end components implemented in this plugin.
-     *
-     * @return array
-     */
-    public function registerComponents()
+    protected function addFieldsToUserForm($widget)
     {
-        return []; // Remove this line to activate
-    }
+        if (!$widget->getController() instanceof Users) {
+            return;
+        }
 
-    /**
-     * Registers any back-end permissions used by this plugin.
-     *
-     * @return array
-     */
-    public function registerPermissions()
-    {
-        // return []; // Remove this line to activate
-
-        return [
-            'lucacalcaterra.ldapauth.some_permission' => [
-                'tab' => 'LdapAuth',
-                'label' => 'Some permission',
-                //'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
+        $widget->addFields([
+            'domain' => [
+                'label'   => 'LDAP Domain',
+                'type'    => 'text',
+                'readOnly' => true,
+                'span' => 'left'
             ],
-        ];
+            'guid' => [
+                'label'   => 'LDAP Guid',
+                'type'    => 'text',
+                'readOnly' => true,
+                'span' => 'right'
+            ]
+        ]);
     }
+
+    protected function addFieldsToUserList($widget)
+    {
+        if (!$widget->getController() instanceof Users) {
+            return;
+        }
+
+        $widget->addColumns([
+            'domain' => [
+                'label' => 'LDAP Domain',
+            ],
+            'guid' => [
+                'label' => 'LDAP Guid'
+            ],
+        ]);
+    }
+
 
     /**
      * Boots (configures and registers) any packages found within this plugin's packages.load configuration value

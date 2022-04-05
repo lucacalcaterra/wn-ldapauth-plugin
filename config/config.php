@@ -85,11 +85,11 @@ return [
                             'sync_attributes' => [
                                 'first_name' => 'givenName',
                                 'last_name' => 'sn',
-                                'login' => 'samaccountname',
+                                'login' => Settings::get('login_attribute'),
                                 'email' => 'mail',
                             ],
                             'sync_existing' => [
-                                'login' => 'samaccountname',
+                                'login' => Settings::get('login_attribute'),
                             ],
                         ],
                     ],

@@ -48,8 +48,14 @@ tabs:
             type: checkbox
             default: false
 
+        login_attribute:
+            span: left
+            label: "login -Ldap attribute field association"
+            type: text
+            size: small
+            default: samaccountname
         override_default_login:
             span: left
             label: "Override default login to Backend (login only with LDAP)"
             type: checkbox
-            default: false
+            default: true

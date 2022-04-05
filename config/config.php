@@ -115,8 +115,8 @@ return [
                         'port' => env('LDAP_PORT', 389),
                         'base_dn' => env('LDAP_BASE_DN', Settings::get('base_dn')),
                         'timeout' => env('LDAP_TIMEOUT', 5),
-                        'use_ssl' => env('LDAP_SSL', false),
-                        'use_tls' => env('LDAP_TLS', false),
+                        'use_ssl' => env('LDAP_SSL', boolval(Settings::get('use_ssl'))),
+                        'use_tls' => env('LDAP_TLS', boolval(Settings::get('use_tls'))),
                     ]
                 ]
             ]

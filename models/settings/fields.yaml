@@ -28,13 +28,25 @@ tabs:
             span: left
             label: "Password"
             comment: ""
-            type: password
+            type: sensitive
             required: true
         base_dn:
             span: left
             label: "Base DN"
             comment: ""
             type: text
+        use_ssl:
+            span: left
+            label: "Use SSL"
+            comment: ""
+            type: checkbox
+            default: false
+        use_tls:
+            span: left
+            label: "Use TLS"
+            comment: ""
+            type: checkbox
+            default: false
 
         override_default_login:
             span: left

@@ -30,26 +30,41 @@ class Ldap extends Controller
     public function signin()
     {
 
-        $credentials = [
-            'samaccountname' => Input::get('login'),
-            'password' => Input::get('password'),
-        ];
+
 
         try {
-            $auth = LdapAuth::attempt($credentials);
-            if (!$auth) {
-                throw new AuthenticationException('Invalid credentials or LDAP Connection Issue');
-            };
-            $user = LdapAuth::user();
+            // get credentials from login form
+            $username = Input::get('login');
+            $password = Input::get('password');
 
-            if ($user) {
-                BackendAuth::login($user, true);
-
-                UpdateManager::instance()->update();
-                AccessLog::add($user);
+            // builtin auth - check user
+            $user = BackendAuth::findUserByLogin($username);
+            if (isset($user) && (!isset($user->domain))) {
+                $credentials = [
+                    'login' => $username,
+                    'password' => $password,
+                ];
+                BackendAuth::authenticate($credentials, true);
             } else {
-                throw new AuthenticationException("LDAP error: User not found");
+                // ldap auth
+                $credentials = [
+                    'samaccountname' => $username,
+                    'password' => $password,
+                ];
+                $auth = LdapAuth::attempt($credentials);
+                if (!$auth) {
+                    throw new AuthenticationException('Invalid credentials or LDAP Connection Issue');
+                };
+                $user = LdapAuth::user();
+
+                if ($user) {
+                    BackendAuth::login($user, true);
+                } else {
+                    throw new AuthenticationException("LDAP error: User not found");
+                }
             }
+            UpdateManager::instance()->update();
+            AccessLog::add($user);
             return Backend::redirectIntended('backend');
         } catch (AuthenticationException $ex) {
             Flash::error($ex->getMessage());

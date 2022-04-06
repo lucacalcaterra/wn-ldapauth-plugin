@@ -1,7 +1,7 @@
 # wn-ldapauth-plugin
-Winter CMS Ldap Auth Plugin
+Winter CMS Ldap Active Directory Auth Plugin
 
-This plugin provide LDAP Authentication for Winter CMS.
+This plugin provide LDAP - Active Directory  Authentication for Winter CMS.
 
 ## Usage
 To install this plugin:

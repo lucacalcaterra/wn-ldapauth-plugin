@@ -29,8 +29,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Ldap Authentication',
-            'description' => 'Provide LDAP Authentication for Backend',
+            'name'        => 'Ldap Active Directory Authentication',
+            'description' => 'Provide LDAP Active Directory Authentication for Backend',
             'author'      => 'Luca Calcaterra',
             'icon'        => 'icon-plug',
             'homepage'    => 'https://github.com/lucacalcaterra/wn-ldapauth-plugin'

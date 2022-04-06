@@ -20,4 +20,14 @@ class Settings extends Model
         'user' => 'required',
         'password' => 'required'
     ];
+
+    public function getRoleDefaultOptions($value, $formData)
+    {
+        return \Backend\Models\UserRole::all()->pluck('name', 'id');
+    }
+
+    public function getGroupDefaultOptions($value, $formData)
+    {
+        return \Backend\Models\UserGroup::all()->pluck('name', 'id');
+    }
 }

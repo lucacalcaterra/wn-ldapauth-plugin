@@ -2,8 +2,7 @@ tabs:
     stretch: true
     defaultTab: Ldap Options
     cssClass: text-blue
-    lazy:
-        - Misc
+
     icons:
         Connection: icon-plug
     fields:
@@ -59,3 +58,25 @@ tabs:
             label: "Override default login to Backend (login only with LDAP)"
             type: checkbox
             default: true
+
+        role_default:
+            span: left
+            label: "Default Role assigned when importing user"
+            type: dropdown
+            tab: Default Permissions
+
+        group_default_check:
+            span: left
+            label: "Enable/Disable default Group assignment when importing user"
+            type: checkbox
+            tab: Default Permissions
+        group_default:
+            span: left
+            label: "Default Groups assigned when importing user"
+            type: dropdown
+            tab: Default Permissions
+            default: 0
+            trigger:
+                action: show
+                field: group_default_check
+                condition: checked

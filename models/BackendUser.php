@@ -4,14 +4,11 @@ namespace LucaCalcaterra\LdapAuth\Models;
 
 // Authenticates the user for logging in and manages the remember token
 // Initial compatibility with Illumninate.Auth
-use Backend\Models\UserGroup;
-use Illuminate\Auth\Authenticatable;
 use LdapRecord\Laravel\Auth\HasLdapUser;
 use Backend\Models\User as BackendUserModel;
-use Backend\Models\UserRole;
+use Backend\Models\UserGroup;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 class BackendUser extends BackendUserModel implements LdapAuthenticatable
 {
@@ -30,8 +27,14 @@ class BackendUser extends BackendUserModel implements LdapAuthenticatable
      */
     public function afterCreate()
     {
-        $role = UserRole::where('code', UserRole::CODE_PUBLISHER)->first();
-        $this->role_id = $role->id;
+        // assign default role
+        $this->role_id = Settings::get('role_default');
+        // assign default group
+        if (Settings::get('group_default_check')) {
+            $group = UserGroup::where('id', Settings::get('group_default'))->first();
+            $group->users()->save($this);
+        }
+        // save
         $this->forceSave();
     }
 }

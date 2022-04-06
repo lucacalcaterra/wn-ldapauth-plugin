@@ -1,7 +1,7 @@
 {
     "name": "lucacalcaterra/ldap-plugin",
     "type": "winter-plugin",
-    "description": "Ldap Plugin Winter CMS",
+    "description": "Ldap Active Directory Authentication Plugin for Winter CMS",
     "keywords": ["winter", "cms", "demo", "plugin"],
     "license": "MIT",
     "authors": [{

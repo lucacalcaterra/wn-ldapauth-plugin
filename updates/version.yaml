@@ -1,4 +1,4 @@
 1.0.2:
     - "Initial integration of LdapRecord"
     - add_ldap_columns_to_users_table.php
-1.1: "fixes"
+1.2: "fixes"

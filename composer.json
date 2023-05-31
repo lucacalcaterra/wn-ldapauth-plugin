@@ -1,5 +1,5 @@
 {
-    "name": "lucacalcaterra/ldap-plugin",
+    "name": "lucacalcaterra/wn-ldap-plugin",
     "type": "winter-plugin",
     "description": "Ldap Active Directory Authentication Plugin for Winter CMS",
     "keywords": ["winter", "cms", "demo", "plugin"],

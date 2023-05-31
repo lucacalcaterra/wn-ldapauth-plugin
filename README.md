@@ -6,7 +6,7 @@ This plugin provide LDAP - Active Directory  Authentication for Winter CMS.
 ## Usage
 To install this plugin:
 
-1. run: **composer require lucacalcaterra/ldap-plugin** and go to step 3
+1. run: **composer require lucacalcaterra/wn-ldap-plugin** and go to step 3
  or
 1. download and extract this archive in /plugins/lucacalcaterra/ldapauth 
 2. back to website root and launch: **composer update**

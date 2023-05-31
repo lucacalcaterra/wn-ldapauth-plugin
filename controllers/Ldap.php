@@ -12,14 +12,11 @@ use System\Classes\UpdateManager;
 use Illuminate\Support\Facades\Auth as LdapAuth;
 use Winter\Storm\Auth\AuthenticationException;
 use Winter\Storm\Exception\ValidationException;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use LucaCalcaterra\LdapAuth\Models\Settings as Settings;
 use Backend, Flash, Input, Lang;
 
 class Ldap extends Controller
 {
-
-    use AuthenticatesUsers;
 
     /**
      * @var array Public controller actions
